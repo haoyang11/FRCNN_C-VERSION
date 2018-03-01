@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGUID>{CE6BBC46-9EFC-4029-9065-85A023866AFB}</ProjectGUID>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>x64</Platform>
+    <RootNamespace>caffe</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="..\packages\OpenBLAS.0.2.14.1\build\native\openblas.targets" Condition="Exists('..\packages\OpenBLAS.0.2.14.1\build\native\openblas.targets')" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="Exists('$(SolutionDir)\CommonSettings.props')">
+    <Import Project="$(SolutionDir)\CommonSettings.props" />
+  </ImportGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>C:\Users\huayun\Desktop\opencv\build\include;C:\Users\huayun\Desktop\boost_1_59_0;E:\Project1211\caffe-ssd-microsoft_vs15_v1\include;E:\Project1211\caffe-ssd-microsoft_vs15_v1\src;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\huayun\Desktop\opencv\build\x64\vc12\lib;C:\Users\huayun\Desktop\boost_1_59_0\stage\lib;C:\Users\huayun\Desktop\vs15_v140;E:\Project1211\caffe-ssd-microsoft_vs15_v1\Build\x64\Release;$(LibraryPath)</LibraryPath>
+    <LinkIncremental>
+    </LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Link>
+      <AdditionalDependencies>libcaffe.lib;$(CudaDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <PostBuildEvent>
+      <Command>"$(ScriptsDir)\FixGFlagsNaming.cmd" "$(OutDir)" $(Configuration)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Link>
+      <AdditionalDependencies>opencv_world310.lib;libcaffe.lib;libprotobuf.lib;leveldb.lib;libprotoc.lib;libprotobuf-lite.lib;gflags.lib;libopenblas.a;libopenblas.dll.a;lmdb.lib;glog.lib;caffehdf5.lib;libcaffehdf5.lib;$(CudaDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>C:\Users\huayun\Desktop\boost_1_59_0\stage\lib;C:\Users\huayun\Desktop\vs15_v140;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Command>"$(ScriptsDir)\FixGFlagsNaming.cmd" "$(OutDir)" $(Configuration)</Command>
+    </PostBuildEvent>
+    <ClCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions);CAFFE_VERSION=1.0.0-rc3</PreprocessorDefinitions>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <AdditionalIncludeDirectories>C:\Users\huayun\Desktop\vs15_v140\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\tools\caffe.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="caffe.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="$(SolutionDir)\CommonSettings.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>?????????????? NuGet ???????NuGet ????????????????????????? http://go.microsoft.com/fwlink/?LinkID=322105??????? {0}?</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\OpenBLAS.0.2.14.1\build\native\openblas.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\OpenBLAS.0.2.14.1\build\native\openblas.targets'))" />
+  </Target>
+</Project>
